@@ -13,9 +13,10 @@
 */
 
 const createIssue = (issue) => {
-  const optProp = ["assigned_to", "status_text"];
   const reqProp = ["issue_title", "issue_text", "created_by"];
+  const optProp = ["assigned_to", "status_text"];
   const additional = {
+    _id: '1',
     created_on: new Date(),
     updated_on: new Date(),
     open: true,

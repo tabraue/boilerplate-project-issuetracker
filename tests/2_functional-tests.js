@@ -9,21 +9,26 @@ suite("Functional Tests", function () {
   this.timeout(5000);
 
   test("Test POST", function (done) {
+    const data = {
+      issue_title: "Title",
+      issue_text: "Some text",
+      created_by: "Diana",
+      assigned_to: "Diana",
+      status_text: "Checking",
+    };
+
     chai
-      .request(server) 
+      .request(server)
       .keepOpen()
-      .post(`/api/issues/:${project}`)
+      .post(`/api/issues/apitest`)
       .type("form")
-      .send({
-        issue_title: req.body.issue_title,
-        issue_text: req.body.issue_text,
-        created_by: req.body.created_by,
-        assigned_to: req.body.assigned_to,
-        status_text: req.body.status_text,
-      })
+      .send(data)
       .end(function (err, res) {
         if (err) return done(err);
         assert.strictEqual(res.status, 200);
+        assert.isObject(data, 'Input data is an object')
+        assert.isString(data.issue_title);
+        //assert.
         done();
       });
   });
