@@ -10,16 +10,16 @@ suite("Functional Tests", function () {
 
   test("Test POST", function (done) {
     chai
-      .request(server)
+      .request(server) 
       .keepOpen()
       .post(`/api/issues/:${project}`)
       .type("form")
       .send({
-        issue_title: issue_title,
-        issue_text: issue_text,
-        created_by: created_by,
-        assigned_to: assigned_to,
-        status_text: status_text,
+        issue_title: req.body.issue_title,
+        issue_text: req.body.issue_text,
+        created_by: req.body.created_by,
+        assigned_to: req.body.assigned_to,
+        status_text: req.body.status_text,
       })
       .end(function (err, res) {
         if (err) return done(err);
