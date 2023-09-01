@@ -16,14 +16,14 @@ const createIssue = (issue) => {
   const reqProp = ["issue_title", "issue_text", "created_by"];
   const optProp = ["assigned_to", "status_text"];
   const additional = {
-    _id: '1',
+    _id: "1",
     created_on: new Date(),
     updated_on: new Date(),
     open: true,
   };
 
   for (const el of reqProp) {
-    if (!issue.hasOwnProperty(el)) {
+    if (!issue.hasOwnProperty(el) || issue[el].length <= 0) {
       return { error: "required field(s) missing" };
     }
   }
