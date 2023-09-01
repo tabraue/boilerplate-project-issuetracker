@@ -89,9 +89,9 @@ suite("Functional Tests", function () {
         if (err) return done(err);
         assert.strictEqual(res.status, 200);
         assert.isObject(data, "Input data is an object");
-        assert.exists(data.issue_title, 'Issue title is included at post data');
-        assert.exists(data.issue_text, 'Issue text is included at post data');
-        assert.exists(data.created_by, 'Created by is included at post data');
+        assert.notExists(data.issue_title, 'Issue title is missing');
+        assert.notExists(data.issue_text, 'Issue text is missing');
+        assert.notExists(data.created_by, 'Created by is missing');
         done();
       }); 
   })
