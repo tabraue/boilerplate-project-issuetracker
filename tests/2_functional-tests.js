@@ -66,17 +66,17 @@ suite("Functional Tests", function () {
         if (err) return done(err);
         assert.strictEqual(res.status, 200);
         assert.isObject(data, "Input data is an object");
-        assert.exists(data.issue_title, 'Issue title is included at post data');
-        assert.exists(data.issue_text, 'Issue text is included at post data');
-        assert.exists(data.created_by, 'Created by is included at post data');
+        assert.exists(data.issue_title, "Issue title is included at post data");
+        assert.exists(data.issue_text, "Issue text is included at post data");
+        assert.exists(data.created_by, "Created by is included at post data");
         done();
       });
   });
 
-  test("Test POST with missing required fields", function(done){
+  test("Test POST with missing required fields", function (done) {
     const data = {
       assigned_to: "Diana",
-      status_text: "Open"
+      status_text: "Open",
     };
 
     chai
@@ -89,12 +89,59 @@ suite("Functional Tests", function () {
         if (err) return done(err);
         assert.strictEqual(res.status, 200);
         assert.isObject(data, "Input data is an object");
-        assert.notExists(data.issue_title, 'Issue title is missing');
-        assert.notExists(data.issue_text, 'Issue text is missing');
-        assert.notExists(data.created_by, 'Created by is missing');
+        assert.notExists(data.issue_title, "Issue title is missing");
+        assert.notExists(data.issue_text, "Issue text is missing");
+        assert.notExists(data.created_by, "Created by is missing");
         done();
-      }); 
-  })
+      });
+  });
+
+  test("Test GET view issues on a project", function (done) {
+    chai
+      .request(server)
+      .keepOpen()
+      .get(`/api/issues/apitest`)
+      .query({})
+      .end(function (err, res) {
+        if (err) return done(err);
+        assert.strictEqual(res.status, 200);
+        assert.isArray(res.body, "Return value is an array");
+        done();
+      });
+  });
+
+  test("Test GET view issues on a project with one filter:", function (done) {
+    chai
+      .request(server)
+      .keepOpen()
+      .get(`/api/issues/apitest?open=false`)
+      .query({open : false})
+      .end(function (err, res) {
+        if (err) return done(err);
+        assert.strictEqual(res.status, 200);
+        assert.isArray(res.body, "Return value is an array");
+        done();
+      });
+  });
+
+
+  test("Test GET view issues on a project with multiple filters:", function (done) {
+    chai
+      .request(server)
+      .keepOpen()
+      .get(`/api/issues/apitest?open=false&assigned_to=Diana`)
+      .query({open : false, assigned_to: "Diana"})
+      .end(function (err, res) {
+        if (err) return done(err);
+        assert.strictEqual(res.status, 200);
+        assert.isArray(res.body, "Return value is an array");
+        done();
+      });
+  });
+
+
 
 
 });
+
+

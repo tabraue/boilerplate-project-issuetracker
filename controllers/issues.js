@@ -1,16 +1,4 @@
-/*
-    POST REQUIREMENTS
-    Required fields:
-        issue_title
-        issue_text
-        created_by
-        assigned_to
-        status_text
-    Return: created object including all of the submitted fields
-            optional fields return empty strings
-            additional created_on(date time) // updated_on(date time) // open(bool)
-    If no required fields sent Return { error: 'required field(s) missing' }
-*/
+const { projectName } = require("../issueprueba");
 
 const createIssue = (issue) => {
   const reqProp = ["issue_title", "issue_text", "created_by"];
@@ -37,7 +25,43 @@ const createIssue = (issue) => {
   return { ...issue, ...additional };
 };
 
-const readIssue = (issue) => {};
+/*
+  GET requirements
+  You can send array of all issues for specific projectname, 
+    with all the fields present for each issue.
+  You can send a GET request 
+    and filter by also passing along any field and value as a URL query 
+    (ie. /api/issues/{project}?open=false). 
+    You can pass one or more field/value pairs at once.
+
+*/
+
+const readIssue = (params) => {
+  if (typeof params !== "object") return { error: "Not found" };
+  if (typeof params === "string" && params.indexOf("?") !== -1) {
+    let query = params.slice(params.indexOf("?") + 1);
+    let arr = query.split("&");
+    let obj = {};
+    arr.forEach((el) => {
+      const [key, value] = el.split("=");
+      obj[key] = value;
+    });
+    params = obj;
+  }
+
+  const result = projectName.filter((issue) => {
+    for (const key in params) {
+      if (params.hasOwnProperty(key)) {
+        if (issue[key] !== params[key]) {
+          return false;
+        }
+      }
+    }
+    return true;
+  });
+
+  return result;
+};
 
 const updateIssue = (issue) => {};
 

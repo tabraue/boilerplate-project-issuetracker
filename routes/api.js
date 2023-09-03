@@ -8,6 +8,10 @@ module.exports = function (app) {
 
     .get(function (req, res) {
       let project = req.params.project;
+      let queryParam = req.query
+      let allIssues = issue.readIssue(queryParam)
+
+      res.json([project, ...allIssues])
     })
 
     .post(function (req, res) {
