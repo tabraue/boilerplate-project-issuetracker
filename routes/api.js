@@ -23,6 +23,9 @@ module.exports = function (app) {
 
     .put(function (req, res) {
       let project = req.params.project;
+
+
+      res.json()
     })
 
     .delete(function (req, res) {

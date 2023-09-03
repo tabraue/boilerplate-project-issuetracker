@@ -63,7 +63,21 @@ const readIssue = (params) => {
   return result;
 };
 
-const updateIssue = (issue) => {};
+
+/*
+  PUT requirements
+     with an _id and one or more fields to update
+     On success, updated_on UPDATE return {  result: 'successfully updated', '_id': _id }
+     
+
+*/
+
+const updateIssue = (id, fieldsToUpdate) => {
+
+
+
+
+};
 
 const deleteIssue = (issue) => {};
 
