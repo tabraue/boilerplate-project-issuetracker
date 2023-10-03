@@ -104,19 +104,19 @@ suite("Functional Tests", function () {
       });
   });
 
-  test("View issues on a project with one filter", function (done) {
-    chai
-      .request(server)
-      .keepOpen()
-      .get(`/api/issues/apitest`)
-      .query({ open: false })
-      .end(function (err, res) {
-        if (err) return done(err);
-        assert.strictEqual(res.status, 200);
-        assert.isArray(res.body, "Return value is an array");
-        done();
-      });
-  });
+test("View issues on a project with one filter", function (done) {
+  chai
+    .request(server)
+    .keepOpen()
+    .get(`/api/issues/apitest`)
+    .query({ open: false })
+    .end(function (err, res) {
+      if (err) return done(err);
+      assert.strictEqual(res.status, 200);
+      assert.isArray(res.body, "Return value is an array");
+      done();
+    });
+});
 
   test("View issues on a project with multiple filters", function (done) {
     chai
